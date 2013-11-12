@@ -1,0 +1,2 @@
+#!/bin/bash
+shuf -n 5 --random-source=/dev/random words | tr '\n' ' ' | sed 's/\ $/\n/'
