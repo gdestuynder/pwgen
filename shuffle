@@ -5,4 +5,4 @@
 
 PASSPHRASE_LEN=5
 
-shuf -n ${PASSPHRASE_LEN} --random-source=/dev/random words | tr '\n' ' ' | sed 's/\ $/\n/'
+shuf -n ${PASSPHRASE_LEN} --random-source=/dev/random $1 | tr '\n' ' ' | sed 's/\ $/\n/'
