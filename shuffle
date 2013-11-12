@@ -1,2 +1,8 @@
 #!/bin/bash
-shuf -n 5 --random-source=/dev/random words | tr '\n' ' ' | sed 's/\ $/\n/'
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+PASSPHRASE_LEN=5
+
+shuf -n ${PASSPHRASE_LEN} --random-source=/dev/random words | tr '\n' ' ' | sed 's/\ $/\n/'

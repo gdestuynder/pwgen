@@ -2,3 +2,13 @@ pwgen
 ===
 
 A passphrase generator with some entropy checks.
+In both cases, running a safe entropy generator is recommended if you're outputing multiple passphrases.
+haveged is a good option <http://www.issihosts.com/haveged/>
+
+Case 1:
+create_wordlist.sh: actually zsh script to generate a word list and output some stats.
+gen_passphrase.py: python script sorting the list, checking the list, filtering the list, and outputing a passphrase
+
+Case 2 (faster):
+create_wordlist2.sh: bash script generating and filtering the list.
+shuffle: just calls shuf correctly to create a passphrase
