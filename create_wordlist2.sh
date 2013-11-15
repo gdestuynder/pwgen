@@ -10,6 +10,7 @@
 # Filters out specific words (like insults), in grep format: "fuck|word|blah"
 # Requires words to be at least 4 char long
 # Lowercases everything
+# Maximum passphrase len
 #
 # Version: 1.0
 # Author: (c) 2013 Mozilla by kang@mozilla.com
@@ -17,13 +18,19 @@
 LANG="en-wo_accents"
 INSULTS_FILTER="fuck"
 MIN_WL_LEN=90000
+PASSPHRASE_NR_WORDS=5
+# Calculate max passphrase length depending on the amount of words
+# Adjusted for separators
+MAX_PASSPHRASE_LEN=70
+MAX_WORD_LEN=$(((MAX_PASSPHRASE_LEN-PASSPHRASE_NR_WORDS+1)/PASSPHRASE_NR_WORDS))
+MIN_WORD_LEN=4
 
 tmp=$(mktemp)
 
 aspell -d ${LANG} dump master | \
 	tr -cd '[:alpha:]\n' | \
 	grep -v ${INSULTS_FILTER} | \
-	grep -e '[^\ ]\{4,\}' | \
+	grep -we "[^\ ]\{${MIN_WORD_LEN},${MAX_WORD_LEN}\}" | \
 	tr '[:upper:]' '[:lower:]' | \
 	sort -u > ${tmp}
 
