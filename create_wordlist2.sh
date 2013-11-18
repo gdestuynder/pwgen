@@ -16,7 +16,7 @@
 # Author: (c) 2013 Mozilla by kang@mozilla.com
 
 LANG="en-wo_accents"
-INSULTS_FILTER="fuck"
+INSULTS_FILTER_FILE="bannedwords.txt"
 MIN_WL_LEN=90000
 PASSPHRASE_NR_WORDS=5
 # Calculate max passphrase length depending on the amount of words
@@ -27,9 +27,14 @@ MIN_WORD_LEN=4
 
 tmp=$(mktemp)
 
+# If the insult filter doesn't exists, create it to avoid errors
+# This is simpler to understand that removing the option dynamically
+# from the list of commands
+[[ -f ${INSULTS_FILTER_FILE} ]] || touch ${INSULTS_FILTER_FILE}
+
 aspell -d ${LANG} dump master | \
 	tr -cd '[:alpha:]\n' | \
-	grep -v ${INSULTS_FILTER} | \
+	grep -v -f ${INSULTS_FILTER_FILE} | \
 	grep -we "[^\ ]\{${MIN_WORD_LEN},${MAX_WORD_LEN}\}" | \
 	tr '[:upper:]' '[:lower:]' | \
 	sort -u > ${tmp}
