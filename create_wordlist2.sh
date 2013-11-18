@@ -34,9 +34,9 @@ tmp=$(mktemp)
 
 aspell -d ${LANG} dump master | \
 	tr -cd '[:alpha:]\n' | \
-	grep -v -f ${INSULTS_FILTER_FILE} | \
 	grep -we "[^\ ]\{${MIN_WORD_LEN},${MAX_WORD_LEN}\}" | \
 	tr '[:upper:]' '[:lower:]' | \
+	grep -v -f ${INSULTS_FILTER_FILE} | \
 	sort -u > ${tmp}
 
 nr=$(wc -l ${tmp} | cut -d ' ' -f 1)
